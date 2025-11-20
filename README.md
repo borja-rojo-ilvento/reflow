@@ -1,6 +1,6 @@
 # Reflow Plugin
 
-Extensible prompt and tool library for Claude.
+Intended to assist with research on a cadence.
 
 ## Installation
 
@@ -10,11 +10,13 @@ Extensible prompt and tool library for Claude.
 
 ## Structure
 
-- **commands/** - Custom slash commands
-- **agents/** - Specialized agents
-- **skills/** - Agent Skills
-- **hooks/** - Event handlers
-- **.mcp.json** - MCP server configuration (if applicable)
+Plugin files are organized in `src/reflow/`:
+
+- **src/reflow/commands/** - Custom slash commands
+- **src/reflow/agents/** - Specialized agents
+- **src/reflow/skills/** - Agent Skills
+- **src/reflow/hooks/** - Event handlers
+- **src/reflow/.claude-plugin/plugin.json** - Plugin manifest
 
 ## Development
 
@@ -23,3 +25,5 @@ Add your commands, agents, skills, and hooks to their respective directories.
 ## Documentation
 
 See individual directories for specific component documentation.
+
+https://code.claude.com/docs/en/plugins-reference#plugin-directory-structure

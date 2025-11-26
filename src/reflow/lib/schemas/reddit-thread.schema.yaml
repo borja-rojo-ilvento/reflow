@@ -1,0 +1,77 @@
+# Schema for Reddit threads
+type: reddit-thread
+extends: metadata.schema.yaml
+
+# Additional fields specific to Reddit threads
+fields:
+  reddit_id:
+    type: string
+    description: "Reddit post ID (base36)"
+    example: "abc123"
+
+  reddit_url:
+    type: string
+    format: uri
+    description: "Direct URL to Reddit post"
+    example: "https://reddit.com/r/MachineLearning/comments/abc123"
+
+  subreddit:
+    type: string
+    description: "Subreddit name (without r/)"
+    example: "MachineLearning"
+
+  author:
+    type: string
+    description: "Reddit username (without u/)"
+    example: "researcher_bot"
+
+  posted_at:
+    type: string
+    format: iso8601
+    description: "When the post was created"
+    example: "2025-11-15T09:15:00Z"
+
+  post_type:
+    type: string
+    enum: [link, text, image, video]
+    description: "Type of Reddit post"
+    example: "text"
+
+  score:
+    type: integer
+    required: false
+    description: "Upvote score"
+
+  num_comments:
+    type: integer
+    required: false
+    description: "Number of comments"
+
+  flair:
+    type: string
+    required: false
+    description: "Post flair text"
+    example: "Discussion"
+
+  include_comments:
+    type: boolean
+    default: false
+    description: "Whether comments are included in content"
+
+# Expected content_category
+content_category: reddit-thread
+
+# Expected content_type
+content_type: json
+
+# Expected source_type
+source_type: reddit
+
+# Schema type identifier
+schema_type: reddit-thread
+
+# Usage notes
+notes: |
+  Reddit threads are stored as JSON files containing the post and optionally
+  the comment tree. If include_comments is true, the JSON includes nested
+  comment structure.

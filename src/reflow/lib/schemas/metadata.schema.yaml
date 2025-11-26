@@ -1,0 +1,164 @@
+# Metadata Schema Specification
+# Defines the canonical format for metadata.md frontmatter
+
+version: "1.0"
+description: "Base schema for all stored content metadata"
+
+# Required fields - must be present in all metadata.md files
+required:
+  - content_hash
+  - content_file
+  - title
+  - content_type
+  - content_category
+  - topics
+  - date
+  - source_type
+  - source_url
+
+# Field definitions
+fields:
+  # === Core Identification ===
+  content_hash:
+    type: string
+    description: "Full SHA-256 hash of content file"
+    example: "a3f2e1b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2"
+
+  content_file:
+    type: string
+    description: "Filename of the content (relative to directory)"
+    example: "content.pdf"
+
+  title:
+    type: string
+    description: "Title of the content"
+    example: "Attention Is All You Need"
+
+  # === Content Typing ===
+  content_type:
+    type: string
+    description: "File format/extension of content"
+    enum: [pdf, html, json, mp4, md, txt, xml, zip]
+    example: "pdf"
+
+  content_category:
+    type: string
+    description: "Semantic category describing what kind of content this is"
+    enum:
+      - academic-paper
+      - financial-report
+      - tweet
+      - tweet-thread
+      - reddit-thread
+      - blog-post
+      - video
+      - lecture
+      - documentation
+      - news-article
+      - other
+    example: "academic-paper"
+
+  schema_type:
+    type: string
+    description: "Optional: Type identifier for structured content (JSON, XML, etc.)"
+    required: false
+    example: "tweet"
+
+  schema_ref:
+    type: string
+    description: "Optional: Reference to schema definition file"
+    required: false
+    example: "lib/schemas/tweet.schema.yaml"
+
+  # === Topic/Taxonomy Indexing ===
+  topics:
+    type: array
+    items: string
+    description: "List of topic keywords for indexing"
+    example: ["llm", "attention", "transformers"]
+
+  tags:
+    type: array
+    items: string
+    description: "Optional: Additional tags for categorization"
+    required: false
+    example: ["deep-learning", "nlp"]
+
+  keywords:
+    type: array
+    items: string
+    description: "Optional: Specific keywords for search"
+    required: false
+    example: ["self-attention", "encoder-decoder"]
+
+  # === Temporal Indexing ===
+  date:
+    type: string
+    format: iso8601
+    description: "ISO 8601 timestamp when content was retrieved/created"
+    example: "2025-11-15T08:00:00Z"
+
+  published_date:
+    type: string
+    format: date
+    description: "Optional: Original publication date"
+    required: false
+    example: "2017-06-12"
+
+  year:
+    type: integer
+    description: "Year extracted from date for indexing"
+    example: 2025
+
+  # === Source Metadata ===
+  source_type:
+    type: string
+    description: "Source platform/system where content originated"
+    enum: [arxiv, twitter, reddit, hackernews, github, youtube, web, local]
+    example: "arxiv"
+
+  source_url:
+    type: string
+    format: uri
+    description: "Original URL where content was found"
+    example: "https://arxiv.org/abs/1706.03762"
+
+  authors:
+    type: array
+    items: string
+    description: "Optional: List of authors/creators"
+    required: false
+    example: ["Vaswani A", "Shazeer N", "Parmar N"]
+
+  venue:
+    type: string
+    description: "Optional: Publication venue (conference, journal, etc.)"
+    required: false
+    example: "NeurIPS 2017"
+
+# === Extensibility ===
+# Reserved field names for future features
+reserved:
+  - embeddings
+  - embedding_model
+  - embedding_timestamp
+  - vector_id
+
+# === Metadata Body Structure ===
+body_template: |
+  # Summary
+
+  [2-3 sentence executive summary of the content]
+
+  # Key Findings
+
+  - [Important takeaway or claim 1]
+  - [Important takeaway or claim 2]
+  - [Important conclusion or insight]
+
+  # Content Context
+
+  **Type**: [e.g., Peer-reviewed academic paper, Preprint, Blog post, Tweet thread]
+  **Format**: [e.g., PDF with 12 pages, JSON with 47 tweets, MP4 video 45 minutes]
+  **Quality**: [e.g., Peer-reviewed, Preprint, Social media, Primary source]
+  **Relevance**: [Why this was collected, what research question it addresses]

@@ -1,0 +1,77 @@
+# Schema for Twitter/X tweets
+type: tweet
+extends: metadata.schema.yaml
+
+# Additional fields specific to tweets
+fields:
+  tweet_id:
+    type: string
+    description: "Unique tweet identifier"
+    example: "1234567890123456789"
+
+  tweet_url:
+    type: string
+    format: uri
+    description: "Direct URL to tweet"
+    example: "https://twitter.com/user/status/1234567890123456789"
+
+  author_handle:
+    type: string
+    description: "Twitter handle of author (without @)"
+    example: "elonmusk"
+
+  author_name:
+    type: string
+    description: "Display name of author"
+    example: "Elon Musk"
+
+  posted_at:
+    type: string
+    format: iso8601
+    description: "When the tweet was posted"
+    example: "2025-11-15T14:32:00Z"
+
+  reply_to:
+    type: string
+    required: false
+    description: "Tweet ID this is replying to"
+    example: "1234567890123456788"
+
+  is_retweet:
+    type: boolean
+    default: false
+    description: "Whether this is a retweet"
+
+  retweet_count:
+    type: integer
+    required: false
+    description: "Number of retweets"
+
+  like_count:
+    type: integer
+    required: false
+    description: "Number of likes"
+
+  media_urls:
+    type: array
+    items: string
+    required: false
+    description: "URLs of attached media"
+
+# Expected content_category
+content_category: tweet
+
+# Expected content_type
+content_type: json
+
+# Expected source_type
+source_type: twitter
+
+# Schema type identifier
+schema_type: tweet
+
+# Usage notes
+notes: |
+  Tweets are stored as JSON files containing the full tweet data structure.
+  For tweet threads, each tweet should be stored separately but linked via
+  reply_to fields. Thread reconstruction can be done via query.

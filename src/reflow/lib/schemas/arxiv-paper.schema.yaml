@@ -1,0 +1,49 @@
+# Schema for arXiv papers
+type: arxiv-paper
+extends: metadata.schema.yaml
+
+# Additional fields specific to arXiv papers
+fields:
+  arxiv_id:
+    type: string
+    description: "arXiv identifier (e.g., 1706.03762)"
+    pattern: '^\d{4}\.\d{4,5}(v\d+)?$'
+    example: "1706.03762"
+
+  arxiv_category:
+    type: string
+    description: "Primary arXiv category"
+    example: "cs.CL"
+
+  arxiv_categories:
+    type: array
+    items: string
+    description: "All arXiv categories"
+    example: ["cs.CL", "cs.LG"]
+
+  doi:
+    type: string
+    required: false
+    description: "Digital Object Identifier"
+    example: "10.48550/arXiv.1706.03762"
+
+  journal_ref:
+    type: string
+    required: false
+    description: "Journal reference if published"
+    example: "NIPS 2017"
+
+  abstract:
+    type: string
+    description: "Full abstract text"
+
+# Expected content_category
+content_category: academic-paper
+
+# Expected source_type
+source_type: arxiv
+
+# Usage notes
+notes: |
+  arXiv papers are stored as PDF files with extracted metadata from the arXiv API.
+  The arxiv_id can be used to construct the canonical URL: https://arxiv.org/abs/{arxiv_id}
